@@ -1,7 +1,10 @@
-# Initialize the recognizer
-recognizer = speech_recognition.Recognizer()
+import streamlit as st
+import speech_recognition as sr
 
-# Define the listreamlit of affirmations
+# Initialize the recognizer
+recognizer = sr.Recognizer()
+
+# Define the list of affirmations
 affirmations = [
     "I am confident",
     "I am worthy",
@@ -14,37 +17,35 @@ affirmations = [
     "I love myself for who I am",
     "My feelings matter",
     "I am worthy of respect",
-    "I love my body justreamlit the way it is",
+    "I love my body just the way it is",
     "I am ready for what comes next.",
     "No one can make me feel inferior without my consent",
     "I deserve happiness and fulfillment"
 ]
 
-streamlit.title("Affirmation Speech Recognition")
+st.title("Affirmation Speech Recognition")
 
 def recognize_affirmation(audio_data):
     try:
         text = recognizer.recognize_google(audio_data)
         return text
-    except speech_recognition.UnknownValueError:
+    except sr.UnknownValueError:
         return "Sorry, could you be a bit louder."
-    except speech_recognition.RequestreamlitError:
+    except sr.RequestError:
         return "Sorry, the service is down."
 
 for affirmation in affirmations:
-    streamlit.subheader(f"Please say: '{affirmation}'")
+    st.subheader(f"Please say: '{affirmation}'")
 
-    if streamlit.button(f"Listreamliten for '{affirmation}'"):
-        with speech_recognition.Microphone() as source:
-            recognizer.adjustreamlit_for_ambient_noise(source, duration=1)
-            streamlit.write("Listreamlitening...")
-            audio = recognizer.listreamliten(source)
+    if st.button(f"Listen for '{affirmation}'"):
+        with sr.Microphone() as source:
+            recognizer.adjust_for_ambient_noise(source, duration=1)
+            st.write("Listening...")
+            audio = recognizer.listen(source)
 
         recognized_text = recognize_affirmation(audio)
 
         if recognized_text.lower() == affirmation.lower():
-            streamlit.success(f"Affirmation detected: '{affirmation}'")
+            st.success(f"Affirmation detected: '{affirmation}'")
         else:
-            streamlit.warning(f"Detected: '{recognized_text}'. Please try again.")
-
-
+            st.warning(f"Detected: '{recognized_text}'. Please try again.")
