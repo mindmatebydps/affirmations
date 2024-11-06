@@ -1,8 +1,10 @@
 import streamlit as st
 import speech_recognition as sr
 
+
 # Initialize the recognizer
 recognizer = sr.Recognizer()
+
 
 # Define the list of affirmations
 affirmations = [
@@ -23,9 +25,16 @@ affirmations = [
     "I deserve happiness and fulfillment"
 ]
 
+
 # Score counter
 if "score" not in st.session_state:
     st.session_state.score = 0  # Initialize the score in session state
+
+
+# Initialize page state
+if "page" not in st.session_state:
+    st.session_state.page = "Affirmation Recognition"  # Default to the recognition page
+
 
 def recognize_affirmation(audio_data):
     try:
@@ -36,16 +45,17 @@ def recognize_affirmation(audio_data):
     except sr.RequestError:
         return "Sorry, the service is down."
 
-# Display the current page content based on the session state
-if "page" not in st.session_state:
-    st.session_state.page = "Affirmation Recognition"  # Default to the recognition page
 
+# Display the current page content based on the session state
 if st.session_state.page == "Affirmation Recognition":
     st.title("Affirmation Speech Recognition")
+    st.markdown("<h3 style='text-align: center; font-size: 16px;'>Boost your confidence and positivity with our Affirmation Speech Recognition App! Practicing affirmations helps strengthen self-belief and reduce stress. Simply say each affirmation aloud, and the app will recognize and confirm it. Track your progress and see how many affirmations you’ve mastered. Start building a more positive mindset today! </h3>", unsafe_allow_html=True)
+
 
     # Process each affirmation
     for affirmation in affirmations:
         st.subheader(f"Please say: '{affirmation}'")
+
 
         if st.button(f"Listen for '{affirmation}'"):
             with sr.Microphone() as source:
@@ -55,7 +65,9 @@ if st.session_state.page == "Affirmation Recognition":
                 audio = recognizer.listen(source)
                 status_placeholder.empty()  # Clear the placeholder after recording is done
 
+
             recognized_text = recognize_affirmation(audio)
+
 
             if recognized_text.lower() == affirmation.lower():
                 st.success(f"Affirmation detected: '{affirmation}'")
@@ -63,9 +75,17 @@ if st.session_state.page == "Affirmation Recognition":
             else:
                 st.warning(f"Detected: '{recognized_text}'. Please try again.")
 
+
+    # Button to go to the Score page
+    if st.button("Go to Score"):
+        st.session_state.page = "Score"
+
 elif st.session_state.page == "Score":
     st.title("Your Score")
     st.subheader(f"Total Affirmations Correct: {st.session_state.score}/{len(affirmations)}")
 
-# Page selection box at the bottom
-st.session_state.page = st.selectbox("Choose a page:", ["Affirmation Recognition", "Score"], index=["Affirmation Recognition", "Score"].index(st.session_state.page))
+    # Button to go back to the Affirmation Recognition page
+    if st.button("Back to Affirmations"):
+        st.session_state.page = "Affirmation Recognition"
+
+    st.markdown("<h1 style='text-align: center; color: white;'>Thank you for paticipating :) </h1>", unsafe_allow_html=True)
