@@ -39,9 +39,11 @@ for affirmation in affirmations:
 
     if st.button(f"Listen for '{affirmation}'"):
         with sr.Microphone() as source:
+            status_placeholder = st.empty()  # Create a placeholder for status messages
+            status_placeholder.write("Listening...")
             recognizer.adjust_for_ambient_noise(source, duration=1)
-            st.write("Listening...")
             audio = recognizer.listen(source)
+            status_placeholder.empty()  # Clear the placeholder after recording is done
 
         recognized_text = recognize_affirmation(audio)
 
