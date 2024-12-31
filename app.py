@@ -1,5 +1,5 @@
 import streamlit as st
-import speech_recognition as sr
+import SpeechRecognition as sr
 
 # Initialize the recognizer
 recognizer = sr.Recognizer()
