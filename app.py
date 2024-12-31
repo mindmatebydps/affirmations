@@ -1,5 +1,5 @@
 import streamlit as st # type: ignore 
-import SpeechRecognition as sr # type: ignore
+import speech_recognition as sr # type: ignore
 
 # Initialize the recognizer
 recognizer = sr.Recognizer()
@@ -18,7 +18,6 @@ affirmations = [
     "My feelings matter",
     "I am worthy of respect",
     "I love my body just the way it is",
-    "I am ready for what comes next.",
     "No one can make me feel inferior without my consent",
     "I deserve happiness and fulfillment",
 ]
