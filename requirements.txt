@@ -1,4 +1,3 @@
 SpeechRecognition
 portaudio
-pyaudio
 Streamlit
