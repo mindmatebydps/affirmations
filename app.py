@@ -18,7 +18,6 @@ affirmations = [
     "My feelings matter",
     "I am worthy of respect",
     "I love my body just the way it is",
-    "I am ready for what comes next.",
     "No one can make me feel inferior without my consent",
     "I deserve happiness and fulfillment",
 ]
