@@ -92,7 +92,6 @@ if st.session_state.page == "Affirmation Recognition":
     # Button to go to the Score page
     if st.button("Go to Score"):
         st.session_state.page = "Score"
-
 elif st.session_state.page == "Score":
     st.title("Your Progress")
     
